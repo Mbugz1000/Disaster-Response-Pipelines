@@ -3,7 +3,7 @@
 Run the following command to set up the environment for this project. 
 
 ```
-conda create --name project_2_udacity python==3.7.3 && conda activate project_2_udacity && conda install pandas jupyterlab altair "pandas-profiling>2.0" sklearn
+conda create --name project_2_udacity python==3.7.3 -y && conda activate project_2_udacity && conda install pandas jupyterlab altair "pandas-profiling>2.0" scikit-learn flask -y
 ```
 
 
@@ -24,15 +24,20 @@ This project is has 2 primary folders:
 - **src**: Source code folder. 
     - 
 
-## How to Interact with Project
-To interact with the project, take the following steps:
-1. Activate the _project_2_udacity_ environment on the Anaconda console
-1. Navigate to the directory of the project on the Anaconda Console
-1. **
+### Instructions:
+1. Run the following commands in the project's root directory to set up your database and model.
+   - To run ETL pipeline that cleans data and stores in database
+     `python data/process_data.py data/disaster_messages.csv data/disaster_categories.csv data/DisasterResponse.db`
+   - To run ML pipeline that trains classifier and saves
+     `python models/train_classifier.py data/DisasterResponse.db models/classifier.pkl`
+2. Run the following command in the app's directory to run your web app.
+   `python run.py`
+
+3. Go to http://0.0.0.0:3001/
 
 ## Results Summary
-- 
+- e
 
 ## Licensing, Authors & Acknowledgements
-- 
+- w
 
