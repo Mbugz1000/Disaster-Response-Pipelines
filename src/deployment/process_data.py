@@ -1,16 +1,76 @@
 import sys
+import pandas as pd
+from sqlalchemy import create_engine
+
+home = '../../'
+data_dir = home + '/data'
+raw_dir = data_dir + '/raw'
+processed_dir = data_dir + '/processed'
+modelling_dir = data_dir + '/for_modelling'
 
 
 def load_data(messages_filepath, categories_filepath):
-    pass
+    """
+    This method loads and merges the messages and categories dataframes.
+
+    :param messages_filepath:
+    :param categories_filepath:
+    :return: Merged dataframe
+    """
+    messages = pd.read_csv(messages_filepath)
+    categories = pd.read_csv(categories_filepath)
+
+    df = messages.merge(categories, on=['id'], how='inner')
+
+    return df
 
 
 def clean_data(df):
-    pass
+    """
+    In this method, I clean the data by taking the followins steps:
+        1. Split categories into separate category columns
+        2. Convert category values to just numbers 0 or 1
+        3. Replace categories column in df with new category columns.
+        4. Remove duplicates
+
+    :param df: Merged Categories and Messages DataFrame
+    :return: Cleaned Dataframe
+    """
+
+    # Split categories into separate category columns
+    categories = df.categories.str.split(';', expand=True)
+
+    row = categories.iloc[0]
+    category_colnames = list(row.str.extract('([\w\W]+)-[\d]$', expand=False).values)
+    categories.columns = category_colnames
+
+    # Convert category values to just numbers 0 or 1
+    for column in categories:
+        # set each value to be the last character of the string
+        categories[column] = categories[column].str[-1]
+
+        # convert column from string to numeric
+        categories[column] = categories[column].astype(int)
+
+    # Replace categories column in df with new category columns.
+    df = df.drop(columns=['categories'])
+    df = pd.concat([df, categories], axis=1)
+
+    # Dropping Duplicates
+    df = df.drop_duplicates()
+
+    return df
 
 
 def save_data(df, database_filename):
-    pass  
+    """
+    This method saves a dataframe to an SqlLite DB
+    :param df:
+    :param database_filename:
+    :return: None
+    """
+    engine = create_engine(f'sqlite:///{database_filename}')
+    df.to_sql('CategorisedMessages', engine, index=False)
 
 
 def main():
