@@ -3,7 +3,7 @@
 Run the following command to set up the environment for this project. 
 
 ```
-conda create --name project_2_udacity python==3.7.3 -y && conda activate project_2_udacity && conda install pandas jupyterlab altair "pandas-profiling>2.0" scikit-learn flask -y
+conda create --name project_2_udacity python==3.7.3 -y && conda activate project_2_udacity && conda install pandas jupyterlab altair "pandas-profiling>2.0" scikit-learn flask nltk sqlalchemy joblib -y
 ```
 
 
