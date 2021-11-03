@@ -13,27 +13,17 @@ conda create --name project_2_udacity python==3.7.3 -y && conda activate project
 This is the second of several Udacity projects in the Data Science Nano-degree program. The primary aim of this project 
 is therefore to complete the course-work of the mentioned program. 
 
-1. 
-
-## File Descriptions
-This project is has 2 primary folders: 
-- **data** : Data Folder. It contains 3 folders
-    - **raw**: 
-    - **processed**: 
-    - **for_modelling**: 
-- **src**: Source code folder. 
-    - 
 
 ### Instructions:
 1. Run the following commands in the project's root directory to set up your database and model.
    - To run ETL pipeline that cleans data and stores in database
-     `python data/process_data.py data/disaster_messages.csv data/disaster_categories.csv data/DisasterResponse.db`
+     `python src/deployment/process_data.py data/raw/messages.csv data/raw/categories.csv data/processed/DisasterResponse.db`
    - To run ML pipeline that trains classifier and saves
-     `python models/train_classifier.py data/DisasterResponse.db models/classifier.pkl`
+     `python src/deployment/train_classifier.py data/processed/DisasterResponse.db data/for_modelling/model_output.pkl`
 2. Run the following command in the app's directory to run your web app.
-   `python run.py`
+   `python src/deployment/app/run.py`
 
-3. Go to http://0.0.0.0:3001/
+3. Go to http://127.0.0.0:3001/
 
 ## Results Summary
 - e

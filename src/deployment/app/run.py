@@ -14,23 +14,12 @@ from sqlalchemy import create_engine
 
 app = Flask(__name__)
 
-def tokenize(text):
-    tokens = word_tokenize(text)
-    lemmatizer = WordNetLemmatizer()
-
-    clean_tokens = []
-    for tok in tokens:
-        clean_tok = lemmatizer.lemmatize(tok).lower().strip()
-        clean_tokens.append(clean_tok)
-
-    return clean_tokens
-
 # load data
-engine = create_engine('sqlite:///../../../data/Processed/DisasterResponse.db')
-df = pd.read_sql_table('YourTableName', engine)
+engine = create_engine('sqlite:///data/Processed/DisasterResponse.db')
+df = pd.read_sql_table('CategorisedMessages', engine)
 
 # load model
-model = joblib.load("../models/your_model_name.pkl")
+model = joblib.load("data/for_modelling/model_output.pkl")
 
 
 # index webpage displays cool visuals and receives user input text for model
@@ -93,7 +82,7 @@ def go():
 
 
 def main():
-    app.run(host='0.0.0.0', port=3001, debug=True)
+    app.run(host='127.0.0.0', port=3001, debug=True)
 
 
 if __name__ == '__main__':
