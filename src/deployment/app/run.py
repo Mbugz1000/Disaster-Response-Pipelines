@@ -1,10 +1,9 @@
 import json
+
 import plotly
 import pandas as pd
 
-from nltk.stem import WordNetLemmatizer
-from nltk.tokenize import word_tokenize
-
+from tokenize_ import tokenize
 from flask import Flask
 from flask import render_template, request, jsonify
 from plotly.graph_objs import Bar
@@ -19,7 +18,7 @@ engine = create_engine('sqlite:///data/Processed/DisasterResponse.db')
 df = pd.read_sql_table('CategorisedMessages', engine)
 
 # load model
-model = joblib.load("data/for_modelling/model_output.pkl")
+model = joblib.load("data/for_modelling/classifier.pkl")
 
 
 # index webpage displays cool visuals and receives user input text for model
@@ -31,18 +30,15 @@ def index():
     # TODO: Below is an example - modify to extract data for your own visuals
     genre_counts = df.groupby('genre').count()['message']
     genre_names = list(genre_counts.index)
-    
+
+    df2 = df.drop(columns=['genre', 'message', 'original', 'id'])
+    categ_series = df2.sum().sort_values(ascending=False)
+    category_counts = list(categ_series.values)
+    category_names = list(categ_series.index)
+
     # create visuals
-    # TODO: Below is an example - modify to create your own visuals
     graphs = [
         {
-            'data': [
-                Bar(
-                    x=genre_names,
-                    y=genre_counts
-                )
-            ],
-
             'layout': {
                 'title': 'Distribution of Message Genres',
                 'yaxis': {
@@ -51,7 +47,30 @@ def index():
                 'xaxis': {
                     'title': "Genre"
                 }
-            }
+            },
+            'data': [
+                Bar(
+                    x=genre_names,
+                    y=genre_counts
+                )
+            ]
+        },
+        {
+            'layout': {
+                'title': 'Distribution of Target Categories',
+                'yaxis': {
+                    'title': "Count"
+                },
+                'xaxis': {
+                    'title': "Category"
+                }
+            },
+            'data': [
+                Bar(
+                    x=category_names,
+                    y=category_counts
+                )
+            ]
         }
     ]
     
@@ -82,7 +101,7 @@ def go():
 
 
 def main():
-    app.run(host='127.0.0.0', port=3001, debug=True)
+    app.run(host='0.0.0.0', port=3001, debug=True)
 
 
 if __name__ == '__main__':
