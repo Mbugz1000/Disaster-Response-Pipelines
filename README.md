@@ -15,9 +15,9 @@ is therefore to complete the course-work of the mentioned program.
 1. Run the following commands in the project's root directory to set up your database and model.
    - To run ETL pipeline that cleans data and stores in database  
      `python src/deployment/process_data.py data/raw/messages.csv data/raw/categories.csv data/processed/DisasterResponse.db`
-   - To run ML pipeline that trains classifier and saves (NB: Training takes +1hr)  
+   - To run ML pipeline that trains classifier and saves (NB: Training takes +20hr)  
      `python src/deployment/train_classifier.py data/processed/DisasterResponse.db data/for_modelling/classifier.pkl`
-2. Fetch the model classifier from [here](https://drive.google.com/file/d/16B1C-Uso2A0eopSyLK3YJOLT2t3NDLhs/view?usp=sharing). (NB: The classifier is about 1.5 GB, so it could not be included in the repository)
+2. Fetch the model classifier from [here](https://drive.google.com/file/d/16B1C-Uso2A0eopSyLK3YJOLT2t3NDLhs/view?usp=sharing) and save it to `data/for_modelling/` (NB: The classifier is about 1.5 GB, so it could not be included in the repository)
 2. Run the following command in the app's directory to run your web app.  
    `python src/deployment/app/run.py`
 

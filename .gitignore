@@ -5,3 +5,4 @@ dask-worker-space/
 *.pyc
 .idea
 .gitignore
+classifier.pkl
